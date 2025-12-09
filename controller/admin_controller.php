@@ -1,5 +1,5 @@
 <?php
-
+//tes
 session_start();
 
 if (!isset($_SESSION['login'])) {
@@ -18,3 +18,4 @@ admin_index();
 
 
 ?>
+
