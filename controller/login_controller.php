@@ -9,7 +9,7 @@ function login_index() {
 
         if (empty($nama) || empty($password)) {
             echo "<script>
-                    alert('nama dan password wajib diisi!');
+                    alert('Nama dan password wajib diisi!');
                     window.location.href='../view/login_view.php';
                   </script>";
             exit();
@@ -20,8 +20,9 @@ function login_index() {
         if ($user) {
             $_SESSION['login'] = true;
             $_SESSION['nama'] = $user['nama'];
-            // $_SESSION['role'] = $user['role'];
-
+            $_SESSION['id_user'] = $user['id_user'];
+            $_SESSION['role'] = $user['role'] ?? 'user';
+            
             header("Location: ../controller/dashboard_controller.php");
             exit;
         } else {
@@ -37,3 +38,4 @@ function login_index() {
 }
 
 login_index();
+?>
