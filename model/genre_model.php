@@ -4,7 +4,6 @@ function get_connection() {
     return mysqli_connect("localhost", "root", "", "movie_rating");
 }
 
-// Fungsi untuk mendapatkan semua genre
 function get_all_genres() {
     $conn = get_connection();
     $query = "SELECT * FROM genres ORDER BY id_genre ASC";
@@ -19,7 +18,6 @@ function get_all_genres() {
     return $rows;
 }
 
-// Fungsi untuk mendapatkan film berdasarkan genre
 function get_films_by_genre($id_genre) {
     $conn = get_connection();
     $query = "
@@ -42,7 +40,6 @@ function get_films_by_genre($id_genre) {
     return $rows;
 }
 
-// Fungsi untuk mendapatkan semua film yang dikelompokkan per genre
 function get_all_films_grouped_by_genre() {
     $genres = get_all_genres();
     $result = [];
@@ -56,5 +53,6 @@ function get_all_films_grouped_by_genre() {
     
     return $result;
 }
+
 
 ?>
