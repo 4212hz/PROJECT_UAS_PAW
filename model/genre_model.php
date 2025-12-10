@@ -54,5 +54,4 @@ function get_all_films_grouped_by_genre() {
     return $result;
 }
 
-
 ?>
