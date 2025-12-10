@@ -3,7 +3,6 @@ session_start();
 
 include_once __DIR__ . '/../model/rating_model.php';
 
-// koneksi
 function get_connection() {
     return mysqli_connect("localhost", "root", "", "movie_rating");
 }
@@ -29,14 +28,10 @@ if ($id_film <= 0 || $rating < 1 || $rating > 5) {
 }
 
 $conn = get_connection();
-
-// cek apakah user sudah pernah memberi rating
 $existing = get_user_rating($conn, $id_user, $id_film);
 
-// cek apakah user sudah pernah memberi rating
 $existing = get_user_rating($conn, $id_user, $id_film);
 
-// simpan rating
 if ($existing == 0) {
     insert_rating($conn, $id_user, $id_film, $rating, $komentar);
 } else {
@@ -49,6 +44,6 @@ if (!empty($komentar)) {
 
 mysqli_close($conn);
 
-// kembali ke halaman detail
 header("Location: ../controller/detailFilm_controller.php?id=$id_film");
 exit();
+
