@@ -10,10 +10,11 @@ if (!isset($_SESSION['login'])) {
 include '../model/genre_model.php';
 
 function genre_index() {
-    $data = get_all_films_grouped_by_genre(); // Ubah fungsi ini
+    $data = get_all_films_grouped_by_genre();
     include '../view/genre/genre_view.php';
 }
 
 genre_index();
+
 
 ?>
