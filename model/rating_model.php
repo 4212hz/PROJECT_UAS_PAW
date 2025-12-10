@@ -7,73 +7,96 @@ function get_connection_rating() {
 
 function get_user_rating($conn, $id_user, $id_film) {
     $conn = get_connection_rating();
-    $stmt = $conn->prepare("SELECT id_rating FROM ratings WHERE id_user = ? AND id_film = ?");
-    $stmt->bind_param("ii", $id_user, $id_film);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $stmt->close();
+
+    $id_user = mysqli_real_escape_string($conn, $id_user);
+    $id_film = mysqli_real_escape_string($conn, $id_film);
+
+    $sql = "
+        SELECT id_rating 
+        FROM ratings 
+        WHERE id_user = '$id_user' AND id_film = '$id_film'
+    ";
+
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+
     return $row ? $row['id_rating'] : 0;
 }
 
 function insert_rating($conn, $id_user, $id_film, $rating, $komentar) {
     $conn = get_connection_rating();
-    $stmt = $conn->prepare("
+
+    $id_user = mysqli_real_escape_string($conn, $id_user);
+    $id_film = mysqli_real_escape_string($conn, $id_film);
+    $rating = mysqli_real_escape_string($conn, $rating);
+    $komentar = mysqli_real_escape_string($conn, $komentar);
+
+    $sql = "
         INSERT INTO ratings (id_user, id_film, rating, komentar, tanggal_rating)
-        VALUES (?, ?, ?, ?, NOW())
-    ");
-    $stmt->bind_param("iiis", $id_user, $id_film, $rating, $komentar);
-    $result = $stmt->execute();
-    $stmt->close();
-    return $result;
+        VALUES ('$id_user', '$id_film', '$rating', '$komentar', NOW())
+    ";
+
+    return mysqli_query($conn, $sql);
 }
 
 function update_rating($conn, $id_user, $id_film, $rating, $komentar) {
     $conn = get_connection_rating();
-    $stmt = $conn->prepare("
-        UPDATE ratings 
-        SET rating = ?, komentar = ?, tanggal_rating = NOW()
-        WHERE id_user = ? AND id_film = ?
-    ");
-    $stmt->bind_param("isii", $rating, $komentar, $id_user, $id_film);
-    $result = $stmt->execute();
-    $stmt->close();
-    return $result;
+
+    $id_user = mysqli_real_escape_string($conn, $id_user);
+    $id_film = mysqli_real_escape_string($conn, $id_film);
+    $rating = mysqli_real_escape_string($conn, $rating);
+    $komentar = mysqli_real_escape_string($conn, $komentar);
+
+    $sql = "
+        UPDATE ratings
+        SET rating = '$rating', komentar = '$komentar', tanggal_rating = NOW()
+        WHERE id_user = '$id_user' AND id_film = '$id_film'
+    ";
+
+    return mysqli_query($conn, $sql);
 }
 
 function get_average_rating($conn, $id_film) {
     $conn = get_connection_rating();
-    $stmt = $conn->prepare("SELECT AVG(rating) AS avg_rating FROM ratings WHERE id_film = ?");
-    $stmt->bind_param("i", $id_film);
-    $stmt->execute();
-    $res = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
-    
+
+    $id_film = mysqli_real_escape_string($conn, $id_film);
+
+    $sql = "SELECT AVG(rating) AS avg_rating FROM ratings WHERE id_film = '$id_film'";
+
+    $result = mysqli_query($conn, $sql);
+    $res = mysqli_fetch_assoc($result);
+
     $average = $res['avg_rating'] ?? 0;
     return $average > 0 ? round($average, 1) : 0;
 }
 
 function insert_comment($conn, $id_user, $id_film, $komentar) {
     $conn = get_connection_rating();
-    $stmt = $conn->prepare("
+
+    $id_user = mysqli_real_escape_string($conn, $id_user);
+    $id_film = mysqli_real_escape_string($conn, $id_film);
+    $komentar = mysqli_real_escape_string($conn, $komentar);
+
+    $sql = "
         INSERT INTO comments (id_user, id_film, komentar, tanggal_komentar)
-        VALUES (?, ?, ?, NOW())
-    ");
-    $stmt->bind_param("iis", $id_user, $id_film, $komentar);
-    $result = $stmt->execute();
-    $stmt->close();
-    return $result;
+        VALUES ('$id_user', '$id_film', '$komentar', NOW())
+    ";
+
+    return mysqli_query($conn, $sql);
 }
 
 function get_total_ratings($conn, $id_film) {
     $conn = get_connection_rating();
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM ratings WHERE id_film = ?");
-    $stmt->bind_param("i", $id_film);
-    $stmt->execute();
-    $res = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
+
+    $id_film = mysqli_real_escape_string($conn, $id_film);
+
+    $sql = "SELECT COUNT(*) AS total FROM ratings WHERE id_film = '$id_film'";
+
+    $result = mysqli_query($conn, $sql);
+    $res = mysqli_fetch_assoc($result);
+
     return $res['total'] ?? 0;
 }
-}
 
+}
 ?>
