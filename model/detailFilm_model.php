@@ -9,49 +9,50 @@ function get_connection_detailFilm() {
 function get_detailFilm_by_id($id_film) {
     $conn = get_connection_detailFilm();
 
-    $stmt = $conn->prepare("SELECT films.*, genres.name_genre FROM films 
-                            JOIN genres ON films.id_genre = genres.id_genre
-                            WHERE films.id_film = ?");
-    $stmt->bind_param("i", $id_film);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
+    $id_film = mysqli_real_escape_string($conn, $id_film);
 
-    $stmt->close();
+    $sql = "
+        SELECT films.*, genres.name_genre FROM films 
+        JOIN genres ON films.id_genre = genres.id_genre
+        WHERE films.id_film = '$id_film'
+    ";
+
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+
     mysqli_close($conn);
-
     return $row;
 }
 
 function get_comments_by_film($id_film) {
     $conn = get_connection_detailFilm();
 
-    $stmt = $conn->prepare("
-        SELECT c.id_comment, u.nama AS user_name, c.komentar, c.tanggal_komentar, r.rating
+    $id_film = mysqli_real_escape_string($conn, $id_film);
+
+    $sql = "
+        SELECT c.id_comment, u.nama AS user_name, c.komentar, 
+               c.tanggal_komentar, r.rating
         FROM comments c
         JOIN users u ON c.id_user = u.id_user
         LEFT JOIN ratings r ON c.id_user = r.id_user AND c.id_film = r.id_film
-        WHERE c.id_film = ?
+        WHERE c.id_film = '$id_film'
         ORDER BY c.tanggal_komentar DESC
-    ");
-    $stmt->bind_param("i", $id_film);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    ";
+
+    $result = mysqli_query($conn, $sql);
 
     $comments = [];
-    while($row = $result->fetch_assoc()){
+    while ($row = mysqli_fetch_assoc($result)) {
         $comments[] = $row;
     }
 
-    $stmt->close();
     mysqli_close($conn);
-
     return $comments;
 }
 
 function prepare_film_detail_data($data) {
-    $film = $data['film']; 
-    
+    $film = $data['film'];
+
     return [
         'id_film' => $film['id_film'],
         'judul_film' => $film['judul_film'],
@@ -67,7 +68,6 @@ function prepare_film_detail_data($data) {
         'comments' => $data['comments']
     ];
 }
+
 }
-
-
 ?>
