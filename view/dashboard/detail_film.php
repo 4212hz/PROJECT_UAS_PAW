@@ -141,7 +141,6 @@ $filmData = prepare_film_detail_data($data);
             <a href="dashboard_controller.php" class="btn-kembali"><i class="bi bi-chevron-left"></i>Back</a>
         </div>
 
-        <!-- POSTER -->
         <img class="poster" 
              src="../view/img/img_poster/<?php echo htmlspecialchars($filmData['poster']); ?>" 
              alt="<?php echo htmlspecialchars($filmData['judul_film']); ?>">
@@ -156,7 +155,6 @@ $filmData = prepare_film_detail_data($data);
                 <?php echo $filmData['avg_rating'] > 0 ? number_format($filmData['avg_rating'], 1) : '0'; ?> ⭐
             </p>
 
-            <!-- FORM -->
             <div class="review-box">
                 <form class="rating-form" method="POST" action="../controller/submit_rating.php">
                     <label for="rating">Give a rating:</label> <br><br>
@@ -179,7 +177,6 @@ $filmData = prepare_film_detail_data($data);
         </div>
     </div>
 
-    <!-- KOMENTAR -->
     <div class="container comment-section">
         <h2>User Comments</h2>
 
@@ -220,3 +217,4 @@ $filmData = prepare_film_detail_data($data);
 
 </body>
 </html>
+
