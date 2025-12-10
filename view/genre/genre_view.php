@@ -15,7 +15,6 @@
             padding: 0;
             padding-top: 80px;
         }
-        /* NAVBAR */
         .navbar {
             background-color: #0B1A39; 
             padding: 0px 80px;
@@ -49,13 +48,11 @@
         .btn-rating, .btn-popular, .btn-genre {
             color: #d6dbeb;
         }
-        /* RIGHT */
         .nav-links {
             display: flex;
             align-items: center;
             gap: 20px;
         }
-        /* MENU LINK */
         .nav-item {
             color: #e3e9ff;
             text-decoration: none;
@@ -80,8 +77,6 @@
         .nav-item:hover::after {
             width: 100%;
         }
-        
-        /* BUTTON LOG OUT */
         .dropdown-logout {
             position: relative;
             display: inline-block;
@@ -153,7 +148,6 @@
             color: #0B1A39;
             background-color: white;
         }
-        /* Alternate background untuk setiap section */
         .fan-section:nth-child(even) {
             background-color: #f5f7fc;
         }
@@ -167,8 +161,6 @@
             margin-top: 5px;
             margin-bottom: 20px;
         }
-        
-        /* Container dengan scroll horizontal */
         .fan-container {
             display: flex;
             gap: 18px;
@@ -292,8 +284,6 @@
             margin: 5px 0;
             font-size: 16px;
         }
-        
-        /* Header untuk halaman genre */
         .page-header {
             background-color: #0B1A39;
             padding: 30px 50px;
@@ -310,7 +300,6 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <div class="navbar">
         <div class="header-atas">
             <img class="title-1" src="../view/img/favicon/logo2.png" alt="">
@@ -331,13 +320,11 @@
         </div>
     </div>
 
-    <!-- Page Header -->
     <div class="page-header">
         <h1>Browse Movies by Genre</h1>
         <p>Explore movies from different genres - Action, Comedy, Drama, Horror, and Romance</p>
     </div>
 
-    <!-- Loop untuk setiap Genre -->
     <?php foreach($data as $genre_data): ?>
         <?php if(count($genre_data['films']) > 0): ?>
         <!-- Fan Favorites Section -->
@@ -390,4 +377,5 @@
         </div>
     </footer>
 </body>
+
 </html>
