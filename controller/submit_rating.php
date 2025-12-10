@@ -30,8 +30,6 @@ if ($id_film <= 0 || $rating < 1 || $rating > 5) {
 $conn = get_connection();
 $existing = get_user_rating($conn, $id_user, $id_film);
 
-$existing = get_user_rating($conn, $id_user, $id_film);
-
 if ($existing == 0) {
     insert_rating($conn, $id_user, $id_film, $rating, $komentar);
 } else {
@@ -46,4 +44,3 @@ mysqli_close($conn);
 
 header("Location: ../controller/detailFilm_controller.php?id=$id_film");
 exit();
-
