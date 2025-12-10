@@ -60,15 +60,14 @@ function prepare_film_detail_data($data) {
         'deskripsi' => $film['deskripsi'],
         'poster' => $film['poster'],
 
-        // Data rating
         'avg_rating' => $data['avg_rating'],
         'total_ratings' => $data['total_ratings'],
         'rating_percentage' => ($data['avg_rating'] / 5) * 100,
 
-        // Comment list
         'comments' => $data['comments']
     ];
 }
 }
+
 
 ?>
